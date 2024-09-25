@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
-    <style>
-        /* Stil für den Chatbot */
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
-        #chat-output { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; background: white; }
-        input[type="text"] { width: 80%; padding: 10px; }
-        button { padding: 10px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot PWA</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Frag
-   Jonny!</h1>
+  <h1>
+    <pre>
+     _____ _           _     _     _   
+    |  _  | |         | |   | |   (_)  
+    | | | | |__   __ _| |__ | |__  _   
+    | | | | '_ \ / _` | '_ \| '_ \| |  
+    \ \_/ / | | | (_| | | | | | | | |  
+     \___/|_| |_|\__,_|_| |_|_| |_|_|  
+    </pre>
+  </h1>
+
+  <div class="chatbox">
     <div id="chat-output"></div>
-    <input type="text" id="user-input" placeholder="Frag mich etwas...">
+    <input type="text" id="user-input" placeholder="Schreibe deine Nachricht...">
     <button id="send-button">Senden</button>
-    <script src="chatbot.js"></script>
+  </div>
+
+  <script src="chatbot.js"></script>
 </body>
 </html>
