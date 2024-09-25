@@ -4,105 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <style>
-        /* Füge hier deine CSS-Stile für das Design hinzu */
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
-        #chat { max-width: 600px; margin: 0 auto; }
-        #messages { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background: white; }
-        #userInput { width: calc(100% - 22px); }
+        /* Stil für den Chatbot */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        #chat-output { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; background: white; }
+        input[type="text"] { width: 80%; padding: 10px; }
+        button { padding: 10px; }
     </style>
 </head>
 <body>
-
-<div id="chat">
-    <h1>Chatbot</h1>
-    <div id="messages"></div>
-    <input type="text" id="userInput" placeholder="Gib deine Frage ein...">
-    <button id="sendButton">Senden</button>
-</div>
-
-<script>
-// Fuzzy-Logik: Levenshtein-Distanz zur Berechnung der Ähnlichkeit
-function getLevenshteinDistance(a, b) {
-    const matrix = [];
-
-    // Initialisiere die erste Zeile
-    for (let i = 0; i <= b.length; i++) {
-        matrix[i] = [i];
-    }
-
-    // Initialisiere die erste Spalte
-    for (let j = 0; j <= a.length; j++) {
-        matrix[0][j] = j;
-    }
-
-    // Fülle die Matrix
-    for (let i = 1; i <= b.length; i++) {
-        for (let j = 1; j <= a.length; j++) {
-            if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                matrix[i][j] = matrix[i - 1][j - 1]; // Keine Kosten
-            } else {
-                matrix[i][j] = Math.min(
-                    matrix[i - 1][j - 1] + 1, // Ersetzen
-                    Math.min(matrix[i][j - 1] + 1, // Einfügen
-                              matrix[i - 1][j] + 1) // Löschen
-                );
-            }
-        }
-    }
-
-    return matrix[b.length][a.length];
-}
-
-function getSimilarityScore(userInput, key) {
-    const distance = getLevenshteinDistance(userInput.toLowerCase(), key.toLowerCase());
-    const maxLen = Math.max(userInput.length, key.length);
-    return (1 - distance / maxLen); // Ähnlichkeitswert zwischen 0 und 1
-}
-
-// Funktion zum Laden der YAML-Antworten
-async function loadYAMLResponses() {
-    try {
-        const response = await fetch('responses.yaml');
-        const text = await response.text();
-        return jsyaml.load(text); // Parsen der YAML-Datei
-    } catch (error) {
-        console.error('Fehler beim Laden der YAML-Datei:', error);
-        return {}; // Rückgabe eines leeren Objekts im Fehlerfall
-    }
-}
-
-// Funktion zur Auswahl der besten Antwort basierend auf Benutzer-Eingabe
-async function getBestResponse(userInput) {
-    const antworten = await loadYAMLResponses();
-    let bestScore = 0;
-    let bestResponse = '';
-
-    for (const key in antworten.antworten) {
-        const score = getSimilarityScore(userInput, key);
-        if (score > bestScore) {
-            bestScore = score;
-            bestResponse = antworten.antworten[key][0]; // Nimm die erste Antwort
-        }
-    }
-
-    return bestResponse || 'Keine passende Antwort gefunden.';
-}
-
-// Event-Listener für den Sendebutton
-document.getElementById('sendButton').addEventListener('click', async () => {
-    const userInput = document.getElementById('userInput').value;
-    const response = await getBestResponse(userInput);
-
-    // Füge die Benutzeranfrage und die Antwort zum Nachrichtenbereich hinzu
-    const messages = document.getElementById('messages');
-    messages.innerHTML += `<div><strong>Du:</strong> ${userInput}</div>`;
-    messages.innerHTML += `<div><strong>Bot:</strong> ${response}</div>`;
-    document.getElementById('userInput').value = ''; // Leere das Eingabefeld
-});
-
-</script>
-
+    <h1>Frag
+   Jonny!</h1>
+    <div id="chat-output"></div>
+    <input type="text" id="user-input" placeholder="Frag mich etwas...">
+    <button id="send-button">Senden</button>
+    <script src="chatbot.js"></script>
 </body>
 </html>
