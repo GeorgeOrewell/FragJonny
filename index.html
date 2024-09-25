@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline Chatbot PWA</title>
+  <title>Offline Chatbot (FragJonny!) PWA</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -11,9 +11,11 @@
   <h1>Chatbot</h1>
   <div id="chatbox">
     <div id="output"></div>
-    <input type="text" id="userInput" placeholder="Frage den Bot..." />
-    <button onclick="sendMessage()">Senden</button>
+    <input type="text" id="userInput" placeholder="Was interressiert dich?" />
+    <button onclick="sendMessage()">Los!</button>
   </div>
+  
+  <script src="fuse.js"></script>
   <script src="responses.js"></script>
   <script src="chatbot.js">
   if ('serviceWorker' in navigator) {
