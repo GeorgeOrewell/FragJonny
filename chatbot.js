@@ -13,7 +13,7 @@ const fuse = new Fuse(fuseData, {
 
 // Funktion, die den Bot dazu bringt, eine Antwort basierend auf der Nutzereingabe zu finden
 function getBotReply(message) {
-  const result = fuse.search(message); // Fuse.js verwendet die Suche
+  const result = fuse.search(cleanString(message)); // Fuse.js verwendet die Suche
 
   if (result.length > 0) {
     // Rückgabe der Antwort basierend auf der besten Übereinstimmung
@@ -36,7 +36,7 @@ function displayChatLog() {
   const chatLog = JSON.parse(localStorage.getItem('chatLog')) || [];
   chatLog.forEach(entry => {
     outputDiv.innerHTML += `<p><strong>Du:</strong> ${entry.user}</p>`;
-    outputDiv.innerHTML += `<p><strong>Bot:</strong> ${entry.bot}</p>`;
+    outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${entry.bot}</p>`;
   });
 }
 
@@ -44,6 +44,19 @@ function displayChatLog() {
 window.onload = function() {
   displayChatLog();
 };
+
+
+function cleanString(inputString, stringList) {
+  // Gehe durch jede Zeichenkette in der Liste
+  stringList.forEach(substring => {
+    // Ersetze alle Vorkommen des Substrings durch einen leeren String
+    const regex = new RegExp(substring, 'g'); // 'g' steht für globales Ersetzen
+    inputString = inputString.replace(regex, '');
+  });
+
+  // Gib den bereinigten String zurück
+  return inputString;
+}
 
 // Funktion, die die Nachricht sendet und die Antwort im Chat anzeigt
 function sendMessage() {
