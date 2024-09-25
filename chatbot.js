@@ -33,7 +33,7 @@ function sendMessage() {
   if (userMessage.trim() !== "") {
     outputDiv.innerHTML += `<p><strong>Du:</strong> ${userMessage}</p>`;
     const botReply = getBotReply(userMessage);  // Hier wird die Fuzzy-Suche verwendet
-    outputDiv.innerHTML += `<p><strong>Bot:</strong> ${botReply}</p>`;
+    outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${botReply}</p>`;
     inputField.value = "";
   }
 }
