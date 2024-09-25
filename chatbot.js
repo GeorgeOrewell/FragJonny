@@ -11,25 +11,6 @@ function sendMessage() {
   }
 }
 
-let responses = {}; // Globale Variable für die Antworten
-
-function setConstResponses() {
-  fetch('responses.yaml')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Netzwerkantwort war nicht ok');
-      }
-      return response.text(); // Die YAML-Datei als Text lesen
-    })
-    .then(data => {
-      responses = parseYAML(data); // Die YAML-Daten in ein Objekt umwandeln
-      console.log('Responses geladen:', responses);
-    })
-    .catch(error => {
-      console.error('Es gab ein Problem mit dem Fetch-Vorgang:', error);
-    });
-}
-
 // Funktion zum Parsen der YAML-Daten
 function parseYAML(data) {
   const yamlLines = data.split('\n');
