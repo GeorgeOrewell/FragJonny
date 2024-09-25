@@ -23,6 +23,27 @@ function getBotReply(message) {
     return "Tut mir leid, ich verstehe dich nicht.";
   }
 }
+// Funktion um den LogFile zu erstellen
+function saveToLocalStorage(userMessage, botReply) {
+  let chatLog = JSON.parse(localStorage.getItem('chatLog')) || [];
+  chatLog.push({ user: userMessage, bot: botReply });
+  localStorage.setItem('chatLog', JSON.stringify(chatLog));
+}
+
+// Selbsterklärend
+function displayChatLog() {
+  const outputDiv = document.getElementById("output");
+  const chatLog = JSON.parse(localStorage.getItem('chatLog')) || [];
+  chatLog.forEach(entry => {
+    outputDiv.innerHTML += `<p><strong>Du:</strong> ${entry.user}</p>`;
+    outputDiv.innerHTML += `<p><strong>Bot:</strong> ${entry.bot}</p>`;
+  });
+}
+
+// Rufe die Funktion beim Laden der Seite auf, um den bisherigen Chatverlauf anzuzeigen
+window.onload = function() {
+  displayChatLog();
+};
 
 // Funktion, die die Nachricht sendet und die Antwort im Chat anzeigt
 function sendMessage() {
@@ -34,6 +55,9 @@ function sendMessage() {
     outputDiv.innerHTML += `<p><strong>Du:</strong> ${userMessage}</p>`;
     const botReply = getBotReply(userMessage);  // Hier wird die Fuzzy-Suche verwendet
     outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${botReply}</p>`;
+// Speichere im localStorage
+    saveToLocalStorage(userMessage, botReply);
+
     inputField.value = "";
   }
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline Chatbot (FragJonny!) PWA</title>
+  <title>FragJonny! PWA</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -14,8 +14,11 @@
     <div id="output"></div>
     <input type="text" id="userInput" placeholder="Was interressiert dich?" />
     <button onclick="sendMessage()">Los!</button>
+    <button onclick="uploadLogFile()">Log-Datei senden</button>
   </div>
   
+  
+  <script src="uploadChatLog.sh"></script>
   <script src="fuse.js"></script>
   <script src="responses.js"></script>
   <script src="chatbot.js">
