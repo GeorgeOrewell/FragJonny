@@ -39,7 +39,7 @@ function getSimilarityScore(userInput, key) {
 // Fetch-Request, um Antworten dynamisch zu laden
 async function fetchAnswers() {
     try {
-        const response = await fetch('https://example.com/api/antworten'); // Ersetze durch die tatsächliche URL
+        const response = await fetch('https://raw.githubusercontent.com/GeorgeOrewell/FragJonny/main/responses.yaml'); // Ersetze durch die tatsächliche URL
         if (!response.ok) {
             throw new Error('Netzwerkantwort war nicht ok');
         }
