@@ -1,75 +1,70 @@
-// Fuzzy-Logik: Levenshtein-Distanz zur Berechnung der Ähnlichkeit
-function getLevenshteinDistance(a, b) {
-    const matrix = [];
+// Dummy-YAML-Inhalte (ersetze dies durch den Inhalt der Datei oder einen Fetch-Request)
+const yamlData = `
+antworten:
+  Alexander der Große:
+    - "Ein mazedonischer König und Militärstratege, der das größte Reich der Antike aufbaute. Sein Eroberungsfeldzug reichte von Griechenland bis Indien und verbreitete die hellenistische Kultur."
+  
+  Kleopatra:
+    - "Die letzte Pharaonin Ägyptens, die für ihre politischen Allianzen mit Julius Caesar und Mark Anton bekannt ist. Ihre Herrschaft markierte das Ende der ägyptischen Unabhängigkeit."
 
-    // Initialisiere die erste Zeile
-    for (let i = 0; i <= b.length; i++) {
-        matrix[i] = [i];
+  Julius Caesar:
+    - "Ein römischer General und Diktator, der bedeutende politische und soziale Reformen einführte. Sein Aufstieg zur Macht und seine Ermordung führten zum Ende der Römischen Republik und dem Beginn des Römischen Kaiserreichs."
+  
+  Marie Curie:
+    - "Eine polnisch-französische Physikerin und Chemikerin, die für ihre Forschung über Radioaktivität bekannt ist. Sie war die erste Frau, die einen Nobelpreis erhielt, und die einzige Person, die Nobelpreise in zwei wissenschaftlichen Disziplinen gewann."
+  
+  Albert Einstein:
+    - "Ein deutscher theoretischer Physiker, der die Relativitätstheorie entwickelte, die unser Verständnis von Raum, Zeit und Gravitation revolutionierte. Er gilt als einer der bedeutendsten Wissenschaftler des 20. Jahrhunderts."
+`;
+
+// YAML parsen
+const responses = jsyaml.load(yamlData);
+
+// Funktion zur Berechnung der Ähnlichkeit zwischen zwei Strings
+function getSimilarityScore(str1, str2) {
+  let matches = 0;
+  const words1 = str1.toLowerCase().split(" ");
+  const words2 = str2.toLowerCase().split(" ");
+  
+  words1.forEach(word1 => {
+    if (words2.includes(word1)) {
+      matches++;
     }
-
-    // Initialisiere die erste Spalte
-    for (let j = 0; j <= a.length; j++) {
-        matrix[0][j] = j;
-    }
-
-    // Fülle die Matrix
-    for (let i = 1; i <= b.length; i++) {
-        for (let j = 1; j <= a.length; j++) {
-            if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                matrix[i][j] = matrix[i - 1][j - 1]; // Keine Kosten
-            } else {
-                matrix[i][j] = Math.min(
-                    matrix[i - 1][j - 1] + 1, // Ersetzen
-                    Math.min(matrix[i][j - 1] + 1, // Einfügen
-                              matrix[i - 1][j] + 1) // Löschen
-                );
-            }
-        }
-    }
-
-    return matrix[b.length][a.length];
+  });
+  
+  return matches / Math.max(words1.length, words2.length);
 }
 
-function getSimilarityScore(userInput, key) {
-    const distance = getLevenshteinDistance(userInput.toLowerCase(), key.toLowerCase());
-    const maxLen = Math.max(userInput.length, key.length);
-    return (1 - distance / maxLen); // Ähnlichkeitswert zwischen 0 und 1
-}
+// Funktion zum Abgleich der Benutzereingabe
+function getResponse(userInput) {
+  const answers = responses.antworten;
+  let bestMatch = null;
+  let highestScore = 0;
 
-// Fetch-Request, um Antworten dynamisch zu laden
-async function fetchAnswers() {
-    try {
-        const response = await fetch('https://raw.githubusercontent.com/GeorgeOrewell/FragJonny/main/responses.yaml'); // Ersetze durch die tatsächliche URL
-        if (!response.ok) {
-            throw new Error('Netzwerkantwort war nicht ok');
-        }
-        const data = await response.json();
-        return data.antworten; // Annahme: Antworten sind im JSON-Feld "antworten"
-    } catch (error) {
-        console.error('Fehler beim Abrufen der Antworten:', error);
-        return {}; // Rückgabe eines leeren Objekts im Fehlerfall
+  for (const key in answers) {
+    const score = getSimilarityScore(userInput, key);
+    if (score > highestScore) {
+      highestScore = score;
+      bestMatch = key;
     }
+  }
+
+  // Rückgabe der besten Antwort oder eine Standardantwort
+  return bestMatch ? answers[bestMatch][0] : "Entschuldigung, das habe ich nicht verstanden.";
 }
 
-// Funktion zur Auswahl der besten Antwort basierend auf Benutzer-Eingabe
-async function getBestResponse(userInput) {
-    const antworten = await fetchAnswers();
-    let bestScore = 0;
-    let bestResponse = '';
+// Event-Listener für den Button
+document.getElementById('send-button').addEventListener('click', function() {
+  const userInput = document.getElementById('user-input').value;
+  const chatOutput = document.getElementById('chat-output');
 
-    for (const key in antworten) {
-        const score = getSimilarityScore(userInput, key);
-        if (score > bestScore) {
-            bestScore = score;
-            bestResponse = antworten[key][0]; // Nimm die erste Antwort
-        }
-    }
+  if (userInput) {
+    // Zeige die Benutzereingabe im Chat
+    chatOutput.innerHTML += `<p><strong>Du:</strong> ${userInput}</p>`;
+    document.getElementById('user-input').value = '';
 
-    return bestResponse || 'Keine passende Antwort gefunden.';
-}
-
-// Beispiel für die Verwendung
-const userInput = "Albert Einstein"; // Beispielhafte Benutzereingabe
-getBestResponse(userInput).then(response => {
-    console.log(response);
+    // Antwort basierend auf der YAML-Datei auswählen
+    const botResponse = getResponse(userInput);
+    chatOutput.innerHTML += `<p><strong>Bot:</strong> ${botResponse}</p>`;
+  }
 });
