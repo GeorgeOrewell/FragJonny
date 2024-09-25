@@ -1,44 +1,108 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline Chatbot PWA</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <style>
+        /* Füge hier deine CSS-Stile für das Design hinzu */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        #chat { max-width: 600px; margin: 0 auto; }
+        #messages { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background: white; }
+        #userInput { width: calc(100% - 22px); }
+    </style>
 </head>
 <body>
 
-  <h6>
-  _____                  _      
- |  ___| __ __ _  __ _  | |     
- | |_ | '__/ _` |/ _` | | |     
- |  _|| | | (_| | (_| | |_|     
- |_|  |_|  \__,_|\__, | (_)     
-     | | ___  _ _|___/__  _   _ 
-  _  | |/ _ \| '_ \| '_ \| | | |
- | |_| | (_) | | | | | | | |_| |
-  \___/ \___/|_| |_|_| |_|\__, |
-                          |___/ 
-  </h6>
+<div id="chat">
+    <h1>Chatbot</h1>
+    <div id="messages"></div>
+    <input type="text" id="userInput" placeholder="Gib deine Frage ein...">
+    <button id="sendButton">Senden</button>
+</div>
 
-  <div id="chatbox">
-    <div id="output"></div>
-    <input type="text" id="userInput" placeholder="Frage den Bot..." />
-    <button onclick="sendMessage()">Senden</button>
-  </div>
+<script>
+// Fuzzy-Logik: Levenshtein-Distanz zur Berechnung der Ähnlichkeit
+function getLevenshteinDistance(a, b) {
+    const matrix = [];
 
-  <script src="chatbot.js"></script>
-  <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(function(registration) {
-        console.log('Service Worker registriert mit Scope:', registration.scope);
-      })
-      .catch(function(error) {
-        console.log('Service Worker Registrierung fehlgeschlagen:', error);
-      });
-   }
-   </script>
+    // Initialisiere die erste Zeile
+    for (let i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+    }
+
+    // Initialisiere die erste Spalte
+    for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+    }
+
+    // Fülle die Matrix
+    for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1]; // Keine Kosten
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1, // Ersetzen
+                    Math.min(matrix[i][j - 1] + 1, // Einfügen
+                              matrix[i - 1][j] + 1) // Löschen
+                );
+            }
+        }
+    }
+
+    return matrix[b.length][a.length];
+}
+
+function getSimilarityScore(userInput, key) {
+    const distance = getLevenshteinDistance(userInput.toLowerCase(), key.toLowerCase());
+    const maxLen = Math.max(userInput.length, key.length);
+    return (1 - distance / maxLen); // Ähnlichkeitswert zwischen 0 und 1
+}
+
+// Funktion zum Laden der YAML-Antworten
+async function loadYAMLResponses() {
+    try {
+        const response = await fetch('responses.yaml');
+        const text = await response.text();
+        return jsyaml.load(text); // Parsen der YAML-Datei
+    } catch (error) {
+        console.error('Fehler beim Laden der YAML-Datei:', error);
+        return {}; // Rückgabe eines leeren Objekts im Fehlerfall
+    }
+}
+
+// Funktion zur Auswahl der besten Antwort basierend auf Benutzer-Eingabe
+async function getBestResponse(userInput) {
+    const antworten = await loadYAMLResponses();
+    let bestScore = 0;
+    let bestResponse = '';
+
+    for (const key in antworten.antworten) {
+        const score = getSimilarityScore(userInput, key);
+        if (score > bestScore) {
+            bestScore = score;
+            bestResponse = antworten.antworten[key][0]; // Nimm die erste Antwort
+        }
+    }
+
+    return bestResponse || 'Keine passende Antwort gefunden.';
+}
+
+// Event-Listener für den Sendebutton
+document.getElementById('sendButton').addEventListener('click', async () => {
+    const userInput = document.getElementById('userInput').value;
+    const response = await getBestResponse(userInput);
+
+    // Füge die Benutzeranfrage und die Antwort zum Nachrichtenbereich hinzu
+    const messages = document.getElementById('messages');
+    messages.innerHTML += `<div><strong>Du:</strong> ${userInput}</div>`;
+    messages.innerHTML += `<div><strong>Bot:</strong> ${response}</div>`;
+    document.getElementById('userInput').value = ''; // Leere das Eingabefeld
+});
+
+</script>
+
 </body>
 </html>
