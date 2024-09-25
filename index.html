@@ -3,27 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot PWA</title>
+  <title>Offline Chatbot PWA</title>
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>
-    <pre>
-     _____ _           _     _     _   
-    |  _  | |         | |   | |   (_)  
-    | | | | |__   __ _| |__ | |__  _   
-    | | | | '_ \ / _` | '_ \| '_ \| |  
-    \ \_/ / | | | (_| | | | | | | | |  
-     \___/|_| |_|\__,_|_| |_|_| |_|_|  
-    </pre>
-  </h1>
-
-  <div class="chatbox">
-    <div id="chat-output"></div>
-    <input type="text" id="user-input" placeholder="Schreibe deine Nachricht...">
-    <button id="send-button">Senden</button>
+  <h1>Chatbot</h1>
+  <div id="chatbox">
+    <div id="output"></div>
+    <input type="text" id="userInput" placeholder="Frage den Bot..." />
+    <button onclick="sendMessage()">Senden</button>
   </div>
 
   <script src="chatbot.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(registration) {
+        console.log('Service Worker registriert mit Scope:', registration.scope);
+      })
+      .catch(function(error) {
+        console.log('Service Worker Registrierung fehlgeschlagen:', error);
+      });
+  }
+</script>
 </body>
 </html>
