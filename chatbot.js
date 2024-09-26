@@ -1,5 +1,5 @@
 // responses.js importiert die Antworten aus einer externen Datei
-//const stringList = ["ein", "für", "Hi", "Danke", "Ich", "was kennst du", "Okay",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", "in", "der", "die", " das ", " von ", " etwas ", "über", "welche", "kannst", "du", "reden", "mehr", "Gut", "was", "kennst", "für", "Warum", "Bitte", "Ja", "Nein", "Verstehe", "Hm", "Aha", "Also", "Echt?", "Cool", "Tschüss", "Bis bald", "Guten Morgen", "Gute Nacht", "Alles klar", "Schon gut", "Wie genau", "Wie funktioniert", "Kannst du", "Machst du", "weißt du", "Vielleicht", "Sozusagen", "Irgendwie", "Eben", "Tja", "Na ja", "Hmm"];
+const stringList = ["ein", "für", "Hi", "Danke", "Ich", "was kennst du", "Okay",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", "in", "der", "die", " das ", " von ", " etwas ", "über", "welche", "kannst", "du", "reden", "mehr", "Gut", "was", "kennst", "für", "Warum", "Bitte", "Ja", "Nein", "Verstehe", "Hm", "Aha", "Also", "Echt?", "Cool", "Tschüss", "Bis bald", "Guten Morgen", "Gute Nacht", "Alles klar", "Schon gut", "Wie genau", "Wie funktioniert", "Kannst du", "Machst du", "weißt du", "Vielleicht", "Sozusagen", "Irgendwie", "Eben", "Tja", "Na ja", "Hmm"];
 
 
 // Fuse.js Initialisierung mit den Daten
