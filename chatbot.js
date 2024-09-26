@@ -1,4 +1,6 @@
 // responses.js importiert die Antworten aus einer externen Datei
+const stringList = ["ein", "für", "Hi", "Danke", "Ich", "was kennst du", "Okay",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", "in", "der", "die", " das ", " von ", " etwas ", "über", "welche", "kannst", "du", "reden", "mehr", "Gut", "was", "kennst", "für", "Warum", "Bitte", "Ja", "Nein", "Verstehe", "Hm", "Aha", "Also", "Echt?", "Cool", "Tschüss", "Bis bald", "Guten Morgen", "Gute Nacht", "Alles klar", "Schon gut", "Wie genau", "Wie funktioniert", "Kannst du", "Machst du", "weißt du", "Vielleicht", "Sozusagen", "Irgendwie", "Eben", "Tja", "Na ja", "Hmm"];
+
 
 // Fuse.js Initialisierung mit den Daten
 const fuseData = Object.keys(responses).map(key => ({
@@ -13,15 +15,15 @@ const fuse = new Fuse(fuseData, {
 
 // Funktion, die den Bot dazu bringt, eine Antwort basierend auf der Nutzereingabe zu finden
 function getBotReply(message) {
-//  let cleanput = cleanString(message);
-  const result = fuse.search(message); // Fuse.js verwendet die Suche
+  let cleanput = cleanString(message, stringList);
+  const result = fuse.search(cleanput); // Fuse.js verwendet die Suche
 
   if (result.length > 0) {
     // Rückgabe der Antwort basierend auf der besten Übereinstimmung
     return result[0].item.response;
   } else {
     // Wenn keine passende Antwort gefunden wird
-    return "Tut mir leid, ich verstehe dich nicht.";
+    return "Tut mir leid, dazu wurden mir noch keine Daten hinterlegt. Vielleicht versuchst du mal nur den Begriff einzugeben.";
   }
 }
 // Funktion um den LogFile zu erstellen
