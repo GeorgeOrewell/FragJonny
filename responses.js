@@ -4383,7 +4383,7 @@ const responses = {
     "Der 46. Präsident der Vereinigten Staaten. Mitglied der Demokratischen Partei. Vor seiner Präsidentschaft war er Vizepräsident unter Barack Obama und langjähriger US-Senator.",
   ],
   "Barack Obama": [
-    "Barack Obama ist ein US-amerikanischer Politiker und war von 2009 bis 2017 der 44. Präsident der Vereinigten Staaten. Er war der erste afroamerikanische Präsident des Landes. Vor seiner Präsidentschaft war er Senator für den Bundesstaat Illinois. Obama ist für seine innenpolitischen Reformen wie die Gesundheitsreform ("Obamacare") und seine Bemühungen um diplomatische Lösungen in der Außenpolitik bekannt."
+    "Barack Obama ist ein US-amerikanischer Politiker und war von 2009 bis 2017 der 44. Präsident der Vereinigten Staaten. Er war der erste afroamerikanische Präsident des Landes. Vor seiner Präsidentschaft war er Senator für den Bundesstaat Illinois. Obama ist für seine innenpolitischen Reformen wie die Gesundheitsreform ("Obamacare") und seine Bemühungen um diplomatische Lösungen in der Außenpolitik bekannt.",
   ],
   "Emmanuel Macron": [
     "Der Präsident von Frankreich seit 2017. Gründer der Partei La République En Marche! und ehemaliger Wirtschaftsminister. Macron strebt Reformen in der französischen Wirtschaft und Gesellschaft an.",
