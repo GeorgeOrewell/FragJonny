@@ -5,6 +5,9 @@ const urlsToCache = [
   '/index.html',
   '/chatbot.js',
   '/style.css',
+  '/responses.js',
+  '/manifest.jason',
+  'fuse.js',
 ];
 
 // Installiere den Service Worker und cache wichtige Dateien
