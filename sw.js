@@ -7,7 +7,8 @@ const urlsToCache = [
   '/style.css',
   '/responses.js',
   '/manifest.jason',
-  'fuse.js',
+  '/fuse.js',
+  '/sw.js',
 ];
 
 // Installiere den Service Worker und cache wichtige Dateien
