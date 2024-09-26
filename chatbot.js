@@ -1,5 +1,5 @@
 // responses.js importiert die Antworten aus einer externen Datei
-const stringList = [" ein", " für", "Hi", "Danke", "Ich", "was kennst du", "Okay ", "okay,",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", " in ", " der ", " die ", " das ", " von ", " etwas ", " über ", " welche ", " kannst ", " du ", " reden ", " mehr ", " Gut ", " was ", " kennst ", " für ", "Warum ", " Bitte", "bitte ", "Ja ", "Ja,", " Nein ", " Verstehe ", " Hm ", "hm ", " Aha ", " Also ", " Echt ", "Cool ", "Tschüss", "Bis bald", "Guten Morgen", "Gute Nacht", "Alles klar", "Schon gut", "Wie genau", "Wie funktioniert", "Kannst du", "Machst du", "weißt du", "Vielleicht", "Sozusagen", "Irgendwie", " Eben ", " Tja ", " Na ja ", "Hmm "];
+const stringList = [" ein", " für", "hi ", " danke", "danke,", " ich ", "was kennst du ", "okay ", "okay,", "okay ",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", " in ", " der ", " die ", " das ", " von ", " etwas ", " über ", " welche ", " kannst ", " du ", " reden ", " mehr ", " gut ", " was ", " kennst ", " für ", "warum ", " bitte", "bitte ", "ja ", " ja,", " nein ", " verstehe ", " hm ", "hmm ", " aha ", " also ", " echt ", "cool ", "alles klar", "schon gut", "wie genau", "wie funktioniert", "kannst du", "machst du", "weißt du", "vielleicht", "sozusagen", "irgendwie", " eben ", " tja ", " na ja ", "hmmm "];
 
 
 // Fuse.js Initialisierung mit den Daten
@@ -69,7 +69,7 @@ function sendMessage() {
 
   if (userMessage.trim() !== "") {
     outputDiv.innerHTML += `<p><strong>Du:</strong> ${userMessage}</p>`;
-    let cleanput = cleanString(userMessage, stringList);
+    let cleanput = cleanString(userMessage.toLowerCase(), stringList);
     const botReply = getBotReply(cleanput);  // Hier wird die Fuzzy-Suche verwendet
     outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${botReply}</p>`;
     outputDiv.innerHTML += `<p><strong>Clean:</strong> ${cleanput}</p>`;
