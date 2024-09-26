@@ -8718,4 +8718,13 @@ const responses = {
   "Intervallfasten": [
     "Intervallfasten ist keine traditionelle Diät, sondern eine Methode, bei der man zwischen Essenszeiten und Fastenzeiten wechselt. Eine populäre Variante ist das 16/8-Fasten, bei dem man innerhalb eines 8-stündigen Fensters isst und 16 Stunden fastet. Ein Vorteil ist die potenzielle Gewichtsabnahme und die Verbesserung der Insulinsensitivität. Es gibt auch Hinweise darauf, dass das Fasten die Zellreparatur und den Stoffwechsel positiv beeinflussen kann. Ein Nachteil ist, dass manche Menschen in den Essensphasen zu ungesunden Nahrungsmitteln greifen oder Schwierigkeiten haben, ausreichend Nährstoffe zu sich zu nehmen, was die Vorteile des Fastens untergraben könnte.",
   ],
+  "test": [
+    "Ja, Test war erfolgreich. Du kannst aufatmen, ich funktioniere!",
+  ],
+  "wer bist du": [
+    "Ich bin nur ein kleines Chatprogramm, mein Entwickler ist Jonny, er macht Musik und sowas. Naja und nebenbei noch mich.",
+  ],
+  "kannst du denken": [
+    "Nein, ich bin nicht intelligent wenn du das meinst. Ich kann nur interpretieren was du meinen könntest und versuchen daraus zu lernen.",
+  ],
 };
