@@ -13,24 +13,31 @@
     <div id="chatbox">
     <div id="output"></div>
     <input type="text" id="userInput" placeholder="Was interressiert dich..." />
-<input type="button" name="go" value="Submit" />
-    <button onclick="sendMessage()">Los!</button>
-    <button onclick="uploadChatLog()">Log senden</button>
+    <button onclick="sendMessage()">Senden</button>
+    <button onclick="showHelp()">Hilfe?</button>
   </div>
   <h6>
   © 2024 | J.O.Lavender.   Du nutzt Version:  1.6 (26.09.2024)
   </h6>  
+
+
+<script>
+document.getElementById("userInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Verhindert das Standardverhalten (z.B. das Absenden des Formulars)
+        sendMessage(); // Ruft die Funktion auf
+    }
+});
+
+function submitForm() {
+    // Hier kommt dein Code zum Absenden des Formulars oder zur Verarbeitung
+    alert("Form submitted!"); // Zeigt eine Nachricht an, um zu prüfen, ob es funktioniert
+}
+</script>
   <script src="uploadChatLog.js"></script>  
   <script src="fuse.js"></script>
   <script src="responses.js"></script>
   <script src="chatbot.js">
-document.getElementById("userInput").addEventListener("keypress", function(event) {
-            if (event.key === "return") {
-                event.preventDefault(); // Verhindert das Standardverhalten
-                sendMessage(); // Ruft die Funktion auf
-            }
-
-
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then(function(registration) {
