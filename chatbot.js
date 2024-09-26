@@ -1,5 +1,5 @@
 // responses.js importiert die Antworten aus einer externen Datei
-const stringList = [" ein", " für", "hi ", " danke", "danke,", " ich ", "was kennst du ", "okay ", "okay,", "okay ",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", " in ", " der ", " die ", " das ", " von ", " etwas ", " über ", " welche ", " kannst ", " du ", " reden ", " mehr ", " gut ", " was ", " kennst ", " für ", "warum ", " bitte", "bitte ", "ja ", " ja,", " nein ", " verstehe ", " hm ", "hmm ", " aha ", " also ", " echt ", "cool ", "alles klar", "schon gut", "wie genau", "wie funktioniert", "kannst du", "machst du", "weißt du", "vielleicht", "sozusagen", "irgendwie", " eben ", " tja ", " na ja ", "hmmm "];
+const stringList = ["kennst du", "wer ist ", " ein", " für", "hi ", " danke", "danke,", " ich ", "was kennst du ", "okay ", "okay,", "okay ",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", " in ", " der ", " die ", " das ", " von ", " etwas ", " über ", " welche ", " kannst ", " du ", " reden ", " mehr ", " gut ", " was ", " kennst ", " für ", "warum ", " bitte", "bitte ", "ja ", " ja,", " nein ", " verstehe ", " hm ", "hmm ", " aha ", " also ", " echt ", "cool ", "alles klar", "schon gut", "wie genau", "wie funktioniert", "kannst du", "machst du", "weißt du", "vielleicht", "sozusagen", "irgendwie", " eben ", " tja ", " na ja ", "hmmm "];
 
 
 // Fuse.js Initialisierung mit den Daten
@@ -10,7 +10,7 @@ const fuseData = Object.keys(responses).map(key => ({
 
 const fuse = new Fuse(fuseData, {
   keys: ['name'],        // Schlüssel, um nach den Namen zu suchen
-  threshold: 0.4         // Threshold für Fuzzy-Suche, je niedriger, desto präziser
+  threshold: 0.6         // Threshold für Fuzzy-Suche, je niedriger, desto präziser
 });
 
 // Funktion, die den Bot dazu bringt, eine Antwort basierend auf der Nutzereingabe zu finden
