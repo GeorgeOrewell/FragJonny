@@ -1,5 +1,5 @@
 // responses.js importiert die Antworten aus einer externen Datei
-const stringList = ["\\?", "und ", "hast du", "gehört ", " gehört", "kennst du", "wer ist ", " ein", " für", "hi ", " danke", "danke,", " ich ", "was kennst du ", "okay ", "okay,", "okay ",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", " in ", " der ", " die ", " das ", " von ", " etwas ", " über ", " welche ", " kannst ",  " reden ", " mehr ", "gut,", "warum ", " bitte", "bitte ", "ja ", " ja,", " nein ", " verstehe ", " hm ", "hmm ", " aha ", " also ", " echt ", "cool ", "alles klar", "schon gut", "wie genau", "wie funktioniert", "kannst du", "machst du", "weißt du", "vielleicht", "sozusagen", "irgendwie", " eben ", " tja ", " na ja ", "hmmm "];
+const stringList = ["und ", "hast du", "gehört ", " gehört", "kennst du", "wer ist ", " ein", " für", "hi ", " danke", "danke,", " ich ", "was kennst du ", "okay ", "okay,", "okay ",  "erzähl mir", "was ist", "wie funktioniert", "wer war", "wie geht", "was bedeutet", " in ", " der ", " die ", " das ", " von ", " etwas ", " über ", " welche ", " kannst ",  " reden ", " mehr ", "gut,", "warum ", " bitte", "bitte ", "ja ", " ja,", " nein ", " verstehe ", " hm ", "hmm ", " aha ", " also ", " echt ", "cool ", "alles klar", "schon gut", "wie genau", "wie funktioniert", "kannst du", "machst du", "weißt du", "vielleicht", "sozusagen", "irgendwie", " eben ", " tja ", " na ja ", "hmmm "];
 
 
 // Fuse.js Initialisierung mit den Daten
@@ -15,7 +15,7 @@ const fuse = new Fuse(fuseData, {
 
 // Funktion, die den Bot dazu bringt, eine Antwort basierend auf der Nutzereingabe zu finden
 function getBotReply(message) {
-  let cleanput = cleanString(message, stringList);
+//  let cleanput = cleanString(message, stringList);
   const result = fuse.search(message); // Fuse.js verwendet die Suche
 
   if (result.length > 0) {
@@ -70,9 +70,9 @@ function sendMessage() {
   if (userMessage.trim() !== "") {
     outputDiv.innerHTML += `<p><strong>Du:</strong> ${userMessage}</p>`;
     let cleanput = cleanString(userMessage.toLowerCase(), stringList);
+    outputDiv.innerHTML += `<p><strong>Clean:</strong> ${cleanput}</p>`;
     const botReply = getBotReply(cleanput);  // Hier wird die Fuzzy-Suche verwendet
     outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${botReply}</p>`;
-    outputDiv.innerHTML += `<p><strong>Clean:</strong> ${cleanput}</p>`;
 // Speichere im localStorage
     saveToLocalStorage(userMessage, botReply);
 
