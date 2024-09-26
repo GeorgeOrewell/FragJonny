@@ -10,7 +10,7 @@ const fuseData = Object.keys(responses).map(key => ({
 
 const fuse = new Fuse(fuseData, {
   keys: ['name'],        // Schlüssel, um nach den Namen zu suchen
-  threshold: 0.6         // Threshold für Fuzzy-Suche, je niedriger, desto präziser
+  threshold: 0.3         // Threshold für Fuzzy-Suche, je niedriger, desto präziser
 });
 
 // Funktion, die den Bot dazu bringt, eine Antwort basierend auf der Nutzereingabe zu finden
