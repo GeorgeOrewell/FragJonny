@@ -15,8 +15,8 @@ const fuse = new Fuse(fuseData, {
 
 // Funktion, die den Bot dazu bringt, eine Antwort basierend auf der Nutzereingabe zu finden
 function getBotReply(message) {
-  let cleanput = cleanString(message, stringList);
-  const result = fuse.search(cleanput); // Fuse.js verwendet die Suche
+//  let cleanput = cleanString(message, stringList);
+  const result = fuse.search(message); // Fuse.js verwendet die Suche
 
   if (result.length > 0) {
     // Rückgabe der Antwort basierend auf der besten Übereinstimmung
