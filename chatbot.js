@@ -70,8 +70,9 @@ function sendMessage() {
   if (userMessage.trim() !== "") {
     outputDiv.innerHTML += `<p><strong>Du:</strong> ${userMessage}</p>`;
     const botReply = getBotReply(userMessage);  // Hier wird die Fuzzy-Suche verwendet
+    let cleanput = cleanString(userMessage, stringList);
     outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${botReply}</p>`;
-    outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${cleanut}</p>`;
+    outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${cleanput}</p>`;
 // Speichere im localStorage
     saveToLocalStorage(userMessage, botReply);
 
