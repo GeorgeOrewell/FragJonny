@@ -71,6 +71,7 @@ function sendMessage() {
     outputDiv.innerHTML += `<p><strong>Du:</strong> ${userMessage}</p>`;
     const botReply = getBotReply(userMessage);  // Hier wird die Fuzzy-Suche verwendet
     outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${botReply}</p>`;
+    outputDiv.innerHTML += `<p><strong>Jonny:</strong> ${cleanut}</p>`;
 // Speichere im localStorage
     saveToLocalStorage(userMessage, botReply);
 
