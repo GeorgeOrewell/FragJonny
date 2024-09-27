@@ -2,9 +2,11 @@
 
 # Dateiname als Parameter übergeben
 DATEI=$1
-
+mv "$DATEI" "$DATEI.backup"
 # Ausgabe-Datei, um die modifizierte Datei zu speichern
-AUSGABE_DATEI="${DATEI}.neu"
+AUSGABE_DATEI="${DATEI}"
+DATEI=$DATEI.backup
+
 
 # Temporäre Variablen
 key=""
