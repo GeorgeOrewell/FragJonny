@@ -13,7 +13,14 @@ const fuse = new Fuse(fuseData, {
   threshold: 0.3         // Threshold für Fuzzy-Suche, je niedriger, desto präziser
 });
 
+function clearLocalStorage() {
+    localStorage.clear();
+    console.log("LocalStorage wurde geleert.");
+    location.reload();
+}
+
 // Funktion, die den Bot dazu bringt, eine Antwort basierend auf der Nutzereingabe zu finden
+
 function getBotReply(message) {
 //  let cleanput = cleanString(message, stringList);
   const result = fuse.search(message); // Fuse.js verwendet die Suche

@@ -14,9 +14,21 @@
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             border-radius: 10px;
-            width: 300px;
-            text-align: center;
+            width: 80%;
+            text-align: left;
         }
+
+        #output {
+            width: 100%;      /* Breite des Textfeldes */
+            height: 100%;     /* Höhe des Textfeldes */
+            overflow-y: scroll; /* Ermöglicht vertikales Scrollen */
+            padding: 10px;
+            border: 0px solid #ccc; /* Rahmen um das Textfeld */
+            resize: none;      /* Verhindert Größenänderung des Feldes durch den Benutzer */
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+	}
+
         #themenPopup {
             display: none; /* Popup ist standardmäßig versteckt */
             position: fixed;
@@ -84,10 +96,14 @@
     <div id="output"></div>
     <input type="text" id="userInput" placeholder="Was interressiert dich..." />
     <button onclick="sendMessage()">Senden</button>
+<div class="button-container">
+    <!-- Cache Leeren -->
     <!-- Hilfe Button -->
-    <button onclick="openHelp()">Hilfe anzeigen</button> <button onclick="openThemen()">Themen?</button>
-
+    <button onclick="openHelp()">Hilfe anzeigen</button>
+    <button onclick="openThemen()">Themen?</button>
+    <button onclick="clearLocalStorage()">Neu</button> 
     <!-- Overlay und Popup-Fenster -->
+</div>
     <div id="overlay"></div>
     <div id="helpPopup">
         <h2>Hallo Reisender ;)</h2>
@@ -96,40 +112,38 @@
         </p>
         <p>
             Gib einfach den Begriff ein, den du erklärt haben möchtest, und der Chatbot wird dir eine kurze und präzise Erklärung dazu liefern. 
-            Zum Beispiel kannst du „Wer war Frederic Chopin“, „Was ist Exodus“ oder auch einfach nur „One Piece“ fragen, um eine Erklärung zu diesen Begriffen zu erhalten.
-        </p>
+            Zum Beispiel kannst du „Wer war Frederic Chopin“, „Was ist Exodus“ oder auch einfach nur „One Piece“ fragen, um eine Erklärung zu diesen Begriffen zu erhalten. <p>
+  © 2020 | J.O.Lavender.   Du nutzt Version:  1.7 ('09.2024)
+        
+</p>
         <button id="closeBtn" onclick="closeHelp()">Schließen</button>
     </div>
     <div id="themenPopup">
     	<h2>Verfügbare Themen</h2>
 	<p>Bisher werden folgende Themen unterstützt</p>
-	<p>- Animes
-- Philosophie		- Autoren <p>
-- Physik (b)		- Filme <p>
-- Biologie		- Bücher <p>
-- Komponisten		- deutsche Gedichte (b) <p>
-- Elektrotechnik (b)	- moderne Bands <p>
-- Lyrik			- Pop Songs (b) <p>
-- Politik		- Rock Songs (b) <p>
-- Europa		- Ungarische Autoren <p>
-- Europäische Länder	- Ungarisches Essen <p>
-- Psychiatrie		- Städte <p>
-- Gesundheit (b)	- Musiktheorie <p>
-- Technologie (b)	- Instrumente <p>
-- Finanzen (b)		- wichtige Personen <p>
-- Bildung		- historische Ereignisse <p>
-- Reisen		- Solo Musiker <p>
-- Informatik		- Gerichte (Essen) <p>
-- Desserts
+<pre>
+- Philosophie		- Autoren 
+- Physik (b)		- Filme 
+- Biologie		- Bücher 
+- Komponisten		- deutsche Gedichte (b) 
+- Elektrotechnik (b)	- moderne Bands 
+- Lyrik			- Pop Songs (b) 
+- Politik		- Rock Songs (b) 
+- Europa		- Ungarische Autoren 
+- Europäische Länder	- Ungarisches Essen 
+- Psychiatrie		- Städte 
+- Gesundheit (b)	- Musiktheorie 
+- Technologie (b)	- Instrumente 
+- Finanzen (b)		- wichtige Personen 
+- Bildung		- historische Ereignisse 
+- Reisen		- Solo Musiker 
+- Informatik		- Gerichte (Essen) 
+- Desserts		- Animes
+</pre>
 	</p>
         <button id="closeThemen" onclick="closeThemen()">Schließen</button>
     </div>
   </div>
-  <h6>
-  © 2020 | J.O.Lavender.   Du nutzt Version:  1.7 ('09.2024)
-  </h6>  
-
-
 <script>
 document.getElementById("userInput").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
