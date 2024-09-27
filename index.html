@@ -17,6 +17,20 @@
             width: 300px;
             text-align: center;
         }
+        #themenPopup {
+            display: none; /* Popup ist standardmäßig versteckt */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: grey;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
 
         #overlay {
             display: none;
@@ -42,6 +56,20 @@
         #closeBtn:hover {
             background-color: #0056b3;
         }
+        #closeThemen {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #closeThemen:hover {
+            background-color: #0056b3;
+        }
+
     </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,12 +85,12 @@
     <input type="text" id="userInput" placeholder="Was interressiert dich..." />
     <button onclick="sendMessage()">Senden</button>
     <!-- Hilfe Button -->
-    <button onclick="openHelp()">Hilfe anzeigen</button>
+    <button onclick="openHelp()">Hilfe anzeigen</button> <button onclick="openThemen()">Themen?</button>
 
     <!-- Overlay und Popup-Fenster -->
     <div id="overlay"></div>
     <div id="helpPopup">
-        <h2>Hilfemeldung</h2>
+        <h2>Hallo Reisender ;)</h2>
         <p>
             Willkommen bei Frag Jonny! Hier ist eine kurze Anleitung, wie du Begriffe erklären lassen kannst:
         </p>
@@ -71,6 +99,30 @@
             Zum Beispiel kannst du „Wer war Frederic Chopin“, „Was ist Exodus“ oder auch einfach nur „One Piece“ fragen, um eine Erklärung zu diesen Begriffen zu erhalten.
         </p>
         <button id="closeBtn" onclick="closeHelp()">Schließen</button>
+    </div>
+    <div id="themenPopup">
+    	<h2>Verfügbare Themen</h2>
+	<p>Bisher werden folgende Themen unterstützt</p>
+	<p>- Animes
+- Philosophie		- Autoren
+- Physik (b)		- Filme
+- Biologie		- Bücher
+- Komponisten		- deutsche Gedichte (b)
+- Elektrotechnik (b)	- moderne Bands
+- Lyrik			- Pop Songs (b)
+- Politik		- Rock Songs (b)
+- Europa		- Ungarische Autoren
+- Europäische Länder	- Ungarisches Essen
+- Psychiatrie		- Städte
+- Gesundheit (b)	- Musiktheorie
+- Technologie (b)	- Instrumente
+- Finanzen (b)		- wichtige Personen
+- Bildung		- historische Ereignisse
+- Reisen		- Solo Musiker
+- Informatik		- Gerichte (Essen)
+- Desserts
+	</p>
+        <button id="closeThemen" onclick="closeThemen()">Schließen</button>
     </div>
   </div>
   <h6>
@@ -113,11 +165,25 @@ function submitForm() {
         document.getElementById("helpPopup").style.display = "block";
     }
 
+	    // Öffnen der Themen
+	    function openThemen() {
+        	document.getElementById("overlay").style.display = "block";
+	        document.getElementById("themenPopup").style.display = "block";
+            }	
+
     // Funktion zum Schließen des Hilfe-Popups
     function closeHelp() {
         document.getElementById("overlay").style.display = "none";
         document.getElementById("helpPopup").style.display = "none";
     }
+
+	    //Schließen der Themen
+	    function closeThemen() {
+	        document.getElementById("overlay").style.display = "none";
+ 	       	document.getElementById("themenPopup").style.display = "none";
+	    }
+
+
 </script>
 
 </body>
