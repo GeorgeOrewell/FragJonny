@@ -45,28 +45,28 @@ const responses = {
     " 'Tschau': Bis zum nächsten Mal! Pass auf dich auf.",
   ],
   " 'informatik variablen': informatik variablen": [
-    " 'informatik variablen': Eine Variable ist ein Speicherort, der einen Wert speichern kann. In Python zum Beispiel definierst du eine Variable mit 'x = 5'. Variablen sind wichtig, weil sie es dir ermöglichen, Daten zu speichern und sie im Verlauf deines Programms zu verwenden.",
+    " 'informatik variablen': Eine Variable ist ein Speicherort, der einen Wert speichern kann. In Python zum Beispiel definierst du eine Variable mit `x = 5`. Variablen sind wichtig, weil sie es dir ermöglichen, Daten zu speichern und sie im Verlauf deines Programms zu verwenden.",
   ],
   " 'informatik schleifen': informatik schleifen": [
-    " 'informatik schleifen': Schleifen sind Kontrollstrukturen, die es dir ermöglichen, einen Block von Code mehrfach auszuführen. Die for-Schleife und die 'while'-Schleife sind gängige Beispiele. Schleifen helfen dabei, sich wiederholende Aufgaben zu automatisieren, ohne den Code mehrmals schreiben zu müssen.",
+    " 'informatik schleifen': Schleifen sind Kontrollstrukturen, die es dir ermöglichen, einen Block von Code mehrfach auszuführen. Die `for`-Schleife und die `while`-Schleife sind gängige Beispiele. Schleifen helfen dabei, sich wiederholende Aufgaben zu automatisieren, ohne den Code mehrmals schreiben zu müssen.",
   ],
   " 'informatik funktionen': informatik funktionen": [
-    " 'informatik funktionen': Eine Funktion ist ein Block von wiederverwendbarem Code, der eine bestimmte Aufgabe ausführt. Du kannst Funktionen definieren, um deinen Code zu strukturieren und wiederholbare Aufgaben zu kapseln. In Python definierst du eine Funktion mit dem Schlüsselwort 'def', gefolgt vom Funktionsnamen und Klammern, z. B. 'def meine funktion():'.",
+    " 'informatik funktionen': Eine Funktion ist ein Block von wiederverwendbarem Code, der eine bestimmte Aufgabe ausführt. Du kannst Funktionen definieren, um deinen Code zu strukturieren und wiederholbare Aufgaben zu kapseln. In Python definierst du eine Funktion mit dem Schlüsselwort `def`, gefolgt vom Funktionsnamen und Klammern, z. B. `def meine funktion():`.",
   ],
   " 'informatik fehlerbehandlung': informatik fehlerbehandlung": [
-    " 'informatik fehlerbehandlung': Fehlerbehandlung ist der Prozess, Fehler in deinem Programm zu erkennen und angemessen darauf zu reagieren. In Python verwendest du 'try' und 'except', um Ausnahmen zu behandeln. Durch Fehlerbehandlung kannst du sicherstellen, dass dein Programm nicht abrupt abstürzt und dem Benutzer verständliche Fehlermeldungen anzeigt.",
+    " 'informatik fehlerbehandlung': Fehlerbehandlung ist der Prozess, Fehler in deinem Programm zu erkennen und angemessen darauf zu reagieren. In Python verwendest du `try` und `except`, um Ausnahmen zu behandeln. Durch Fehlerbehandlung kannst du sicherstellen, dass dein Programm nicht abrupt abstürzt und dem Benutzer verständliche Fehlermeldungen anzeigt.",
   ],
   " 'informatik datentypen': informatik datentypen": [
-    " 'informatik datentypen': Datentypen definieren die Art von Daten, die eine Variable speichern kann. Zu den gängigen Datentypen gehören 'int', 'float', 'str' und 'bool'. Die Wahl des richtigen Datentyps ist entscheidend, da sie beeinflusst, welche Operationen auf den Daten ausgeführt werden können.",
+    " 'informatik datentypen': Datentypen definieren die Art von Daten, die eine Variable speichern kann. Zu den gängigen Datentypen gehören `int`, `float`, `str` und `bool`. Die Wahl des richtigen Datentyps ist entscheidend, da sie beeinflusst, welche Operationen auf den Daten ausgeführt werden können.",
   ],
   " 'informatik objektorientierung': informatik objektorientierung": [
     " 'informatik objektorientierung': Objektorientierung ist ein Programmierparadigma, das auf Objekten basiert, die Daten und Funktionen kapseln. In Python kannst du Klassen definieren, um Objekte zu erstellen. Objektorientierte Programmierung ermöglicht es dir, komplexe Programme zu strukturieren und wiederverwendbaren Code zu schreiben.",
   ],
   " 'informatik bibliotheken': informatik bibliotheken": [
-    " 'informatik bibliotheken': Bibliotheken sind Sammlungen von vorgefertigten Funktionen und Klassen, die du in deinem Code verwenden kannst, um Zeit zu sparen und häufige Aufgaben zu vereinfachen. Python hat viele nützliche Bibliotheken wie 'numpy' für numerische Berechnungen und 'pandas' für Datenanalyse.",
+    " 'informatik bibliotheken': Bibliotheken sind Sammlungen von vorgefertigten Funktionen und Klassen, die du in deinem Code verwenden kannst, um Zeit zu sparen und häufige Aufgaben zu vereinfachen. Python hat viele nützliche Bibliotheken wie `numpy` für numerische Berechnungen und `pandas` für Datenanalyse.",
   ],
   " 'informatik debugging': informatik debugging": [
-    " 'informatik debugging': Debugging ist der Prozess des Findens und Behebens von Fehlern in deinem Code. Es gibt verschiedene Tools und Techniken, die dir helfen können, Probleme zu identifizieren. Ein gängiger Ansatz beim Debugging ist das Hinzufügen von 'print'-Anweisungen, um den Wert von Variablen während der Ausführung zu überprüfen.",
+    " 'informatik debugging': Debugging ist der Prozess des Findens und Behebens von Fehlern in deinem Code. Es gibt verschiedene Tools und Techniken, die dir helfen können, Probleme zu identifizieren. Ein gängiger Ansatz beim Debugging ist das Hinzufügen von `print`-Anweisungen, um den Wert von Variablen während der Ausführung zu überprüfen.",
   ],
   " 'informatik versionierung': informatik versionierung": [
     " 'informatik versionierung': Versionskontrolle ist ein System, das Änderungen an deinem Code verfolgt. Git ist ein weit verbreitetes Tool für die Versionskontrolle. Mit Versionskontrolle kannst du Änderungen rückgängig machen, mit anderen Entwicklern zusammenarbeiten und den Verlauf deines Projekts verfolgen.",
