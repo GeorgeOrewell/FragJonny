@@ -15,19 +15,15 @@ SIMILARITY_THRESHOLD = 75  # Mindest-Ähnlichkeit für fuzzy matching (0-100)
 TIMEOUT_DURATION = 20  # Zeit in Sekunden, nach der der Scraping-Prozess abgebrochen wird
 MAX_WORDS = 80  # Maximale Anzahl der Wörter für eine Content-Warnung
 MAX_CHARACTERS = 600  # Maximale Anzahl der Zeichen für eine Content-Warnung
-
 # Log-Datei für Suchbegriffe und Warnungen
 log_file = "scraping_log.txt"
-
 # Suchmaschinen URLs
 search_engines = {
-    "bing": "https://www.bing.com/search?q=",
-    "yahoo": "https://search.yahoo.com/search?p="
+    "yahoo": "https://search.yahoo.com/search?p=",
+    "bing": "https://www.bing.com/search?q="
 }
-
 # Bevorzugte Domains für Ergebnisse
 preferred_domains = ["wikipedia.de", "wikipedia.org"]
-
 # Ausgabe-Datei für JSON-Daten
 output_json = "antworten.json"
 
@@ -43,7 +39,7 @@ signal.signal(signal.SIGALRM, timeout_handler)
 
 def search(query):
     """Durchsuche die Suchmaschinen nach dem Suchbegriff, beginnend mit Bing und dann Yahoo."""
-    search_engines_list = ["bing", "yahoo"]  # Liste der Suchmaschinen in Reihenfolge
+    search_engines_list = ["yahoo", "bing"]  # Liste der Suchmaschinen in Reihenfolge
 
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     
@@ -262,5 +258,45 @@ def main():
     # Neue Suchbegriffe in die Log-Datei schreiben
     if processed_queries:
         save_search_terms(processed_queries)
-
+    update_responses()
     print("Scraping abgeschlossen.")
+
+def update_responses():
+    # Überprüfe, ob die Datei 'responses.js' existiert
+    if not os.path.exists('responses.js'):
+        # Wenn nicht, erstelle die Datei mit dem korrekten Startformat
+        with open('responses.js', 'w', encoding='utf-8') as js_file:
+            js_file.write("const responses = {\n};\n")
+        print("responses.js wurde erstellt.")
+
+    # Öffne die antworten.json Datei und lade ihren Inhalt
+    with open('antworten.json', 'r', encoding='utf-8') as json_file:
+        antworten = json.load(json_file)
+    # Öffne die responses.js Datei und lies ihren Inhalt
+    with open('responses.js', 'r', encoding='utf-8') as js_file:
+        responses_content = js_file.read()
+        responses_content = responses_content.rstrip()
+    # Überprüfe, ob die Datei mit einer geschweiften Klammer endet
+    if responses_content.strip().endswith('};'):
+        # Entferne die letzte geschweifte Klammer
+        responses_content = responses_content.rstrip('};').rstrip()
+    # Frage den Nutzer, ob er die Inhalte der antworten.json in die responses.js übernehmen will
+    user_input = input("Möchten Sie die Inhalte der antworten.json in die responses.js übernehmen? (ja/nein): ").lower()
+    if user_input == 'ja':
+        with open('responses.js', 'w', encoding='utf-8') as js_file:
+            # Schreibe den bisherigen Inhalt ohne die schließende Klammer
+            js_file.write(responses_content)
+            # Füge die neuen Inhalte hinzu
+            for key, value in antworten.items():
+                # Überprüfe, ob der Schlüssel schon existiert
+                if f'"{key}"' not in responses_content:
+                    js_entry = f'\n  "{key}": {json.dumps(value, ensure_ascii=False)},'
+                    js_file.write(js_entry)
+            # Schließe das JS-Objekt wieder mit der geschweiften Klammer
+            js_file.write('\n};')
+        print("Inhalte wurden erfolgreich übernommen.")
+    else:
+        print("Keine Änderungen vorgenommen.")
+
+
+main()

@@ -10,8 +10,8 @@ import os
 
 # Konstanten für das Skript
 SLEEP_TIME = 1  # Sekunden zwischen den Anfragen
-MAX_URLS = 6  # Maximale Anzahl von URLs pro Suchbegriff
-SIMILARITY_THRESHOLD = 75  # Mindest-Ähnlichkeit für fuzzy matching (0-100)
+MAX_URLS = 8  # Maximale Anzahl von URLs pro Suchbegriff
+SIMILARITY_THRESHOLD = 60  # Mindest-Ähnlichkeit für fuzzy matching (0-100)
 TIMEOUT_DURATION = 20  # Zeit in Sekunden, nach der der Scraping-Prozess abgebrochen wird
 MAX_WORDS = 80  # Maximale Anzahl der Wörter für eine Content-Warnung
 MAX_CHARACTERS = 600  # Maximale Anzahl der Zeichen für eine Content-Warnung
@@ -21,11 +21,20 @@ log_file = "scraping_log.txt"
 
 # Suchmaschinen URLs
 search_engines = {
+    "startpage": "https://www.startpage.com/do/dsearch?query=",
     "bing": "https://www.bing.com/search?q=",
+#    "yahoo": "https://search.yahoo.com/search?p=",
+#    "google": "https://www.google.com/search?q=",
+    "duckduckgo": "https://duckduckgo.com/?q=",
+    "ask": "https://www.ask.com/web?q=",
+    "aol": "https://search.aol.com/aol/search?q=",
+    "baidu": "https://www.baidu.com/s?wd=",
+    "yandex": "https://yandex.com/search/?text=",
+    "ecosia": "https://www.ecosia.org/search?q="
 }
 
 # Bevorzugte Domains für Ergebnisse
-preferred_domains = ["wikipedia.de", "wikipedia.org"]
+preferred_domains = ["wikipedia.org", "wikipedia.de"]
 
 # Ausgabe-Datei für JSON-Daten
 output_json = "antworten.json"
@@ -42,7 +51,7 @@ signal.signal(signal.SIGALRM, timeout_handler)
 
 def search(search_engine, query):
     """Durchsuche die angegebene Suchmaschine nach dem Suchbegriff."""
-    search_url = search_engines[search_engine] + urllib.parse.quote(query + " wikipedia")
+    search_url = search_engines[search_engine] + urllib.parse.quote(query + " Wikipedia")
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     response = requests.get(search_url, headers=headers)
     
@@ -73,8 +82,9 @@ def extract_links(html, search_engine):
     """Extrahiere Links aus den Suchergebnissen der angegebenen Suchmaschine."""
     soup = BeautifulSoup(html, 'html.parser')
     
-    if search_engine == "bing":
-        results = soup.find_all('a')
+#    if search_engine == "bing":
+
+    results = soup.find_all('a')
 
     links = []
     for result in results:
@@ -155,6 +165,7 @@ def process_search_term(query, existing_results):
     }
 
     for search_engine in search_engines:
+        print(f"Suche nach '{query}' mit '{search_engine}'.")
         html = search(search_engine, query)
         if html:
             links = extract_links(html, search_engine)
@@ -273,7 +284,6 @@ def update_responses():
     # Öffne die responses.js Datei und lies ihren Inhalt
     with open('responses.js', 'r', encoding='utf-8') as js_file:
         responses_content = js_file.read()
-        responses_content = responses_content.rstrip()
     # Überprüfe, ob die Datei mit einer geschweiften Klammer endet
     if responses_content.strip().endswith('};'):
         # Entferne die letzte geschweifte Klammer
