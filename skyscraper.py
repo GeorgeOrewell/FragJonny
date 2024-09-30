@@ -9,9 +9,9 @@ import signal
 import os
 
 # Konstanten für das Skript
-SLEEP_TIME = 1  # Sekunden zwischen den Anfragen
-MAX_URLS = 8  # Maximale Anzahl von URLs pro Suchbegriff
-SIMILARITY_THRESHOLD = 60  # Mindest-Ähnlichkeit für fuzzy matching (0-100)
+SLEEP_TIME = 2  # Sekunden zwischen den Anfragen
+MAX_URLS = 5  # Maximale Anzahl von URLs pro Suchbegriff
+SIMILARITY_THRESHOLD = 75  # Mindest-Ähnlichkeit für fuzzy matching (0-100)
 TIMEOUT_DURATION = 20  # Zeit in Sekunden, nach der der Scraping-Prozess abgebrochen wird
 MAX_WORDS = 80  # Maximale Anzahl der Wörter für eine Content-Warnung
 MAX_CHARACTERS = 600  # Maximale Anzahl der Zeichen für eine Content-Warnung
@@ -21,7 +21,8 @@ log_file = "scraping_log.txt"
 
 # Suchmaschinen URLs
 search_engines = {
-    "startpage": "https://www.startpage.com/do/dsearch?query=",
+    "wikipedia": "https://de.wikipedia.org/w/index.php?fulltext=1&search=",
+    "startpage": "https://www.startpage.com/sp/search?query=",
     "bing": "https://www.bing.com/search?q=",
 #    "yahoo": "https://search.yahoo.com/search?p=",
 #    "google": "https://www.google.com/search?q=",
@@ -34,7 +35,7 @@ search_engines = {
 }
 
 # Bevorzugte Domains für Ergebnisse
-preferred_domains = ["wikipedia.org", "wikipedia.de"]
+preferred_domains = ["wikipedia.org/wiki", "de.wikipedia.org/wiki", "wikipedia.de/wiki"]
 
 # Ausgabe-Datei für JSON-Daten
 output_json = "antworten.json"
@@ -51,7 +52,7 @@ signal.signal(signal.SIGALRM, timeout_handler)
 
 def search(search_engine, query):
     """Durchsuche die angegebene Suchmaschine nach dem Suchbegriff."""
-    search_url = search_engines[search_engine] + urllib.parse.quote(query + " Wikipedia")
+    search_url = search_engines[search_engine] + urllib.parse.quote(query)
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     response = requests.get(search_url, headers=headers)
     
@@ -165,44 +166,50 @@ def process_search_term(query, existing_results):
     }
 
     for search_engine in search_engines:
-        print(f"Suche nach '{query}' mit '{search_engine}'.")
-        html = search(search_engine, query)
-        if html:
-            links = extract_links(html, search_engine)
-            url_count = 0  # Zähler für durchsuchte URLs
+        try:
+            print(f"Suche nach '{query}' mit '{search_engine}'.")
+            html = search(search_engine, query)
+            if html:
+                links = extract_links(html, search_engine)
+                url_count = 0  # Zähler für durchsuchte URLs
 
-            for link in links:
-                if url_count >= MAX_URLS:
-                    break  # Breche ab, wenn die maximale Anzahl an URLs erreicht ist
+                for link in links:
+                    if url_count >= MAX_URLS:
+                        break  # Breche ab, wenn die maximale Anzahl an URLs erreicht ist
 
-                signal.alarm(TIMEOUT_DURATION)
-                try:
-                    content = scrape_content(link)
-                    signal.alarm(0)
+                    signal.alarm(TIMEOUT_DURATION)
+                    try:
+                        content = scrape_content(link)
+                        signal.alarm(0)
 
-                    if fuzzy_match(query, content):
-                        # Formatieren der Antwort
-                        if not (content.endswith(":") or content.endswith(",") or content.endswith(";") or content.endswith("(")):
-                            formatted_response = f"'{query}': {content}"
-                            results[query].append(formatted_response)
+                        if fuzzy_match(query, content):
+                            # Formatieren der Antwort
+                            if not (content.endswith(":") or content.endswith(",") or content.endswith(";") or content.endswith("(")):
+                                formatted_response = f"'{query}': {content}"
+                                results[query].append(formatted_response)
 
-                            # Warnungen für langen Inhalt
-                            if len(content.split()) > MAX_WORDS or len(content) > MAX_CHARACTERS:
-                                log_warning(f"Warnung: Content für '{query}' ist sehr lang.")
-                            return results  # Sobald ein Treffer gefunden wurde, verlasse die Schleife
+                                # Warnungen für langen Inhalt
+                                if len(content.split()) > MAX_WORDS or len(content) > MAX_CHARACTERS:
+                                    log_warning(f"Warnung: Content für '{query}' ist sehr lang.")
+                                return results  # Sobald ein Treffer gefunden wurde, verlasse die Schleife
 
-                except TimeoutException:
-                    print(f"Timeout beim Scrapen von {link}. Fahre mit der nächsten URL fort.")
-                    continue
-                except Exception as e:
-                    print(f"Fehler beim Scrapen von {link}: {e}")
-                    continue
+                    except TimeoutException:
+                        print(f"Timeout beim Scrapen von {link}. Fahre mit der nächsten URL fort.")
+                        continue
+                    except Exception as e:
+                        print(f"Fehler beim Scrapen von {link}: {e}")
+                        continue
 
-                url_count += 1
-                time.sleep(SLEEP_TIME)
-
-    log_warning(f"Kein Treffer für Suchbegriff: '{query}'")
-    return None
+                    url_count += 1
+                    time.sleep(SLEEP_TIME)
+        except requests.exceptions.RequestException as e:
+            print(f"Fehler beim Abrufen von '{search_engine}': {e}")
+            # Schreibe die bisher gesammelten Ergebnisse sofort in die Datei
+            # write_results_to_file(results)
+            # print(f"Bisherige Ergebnisse wurden in 'results.json' gespeichert.")
+            break  # Beende die Schleife nach einem Fehler
+        log_warning(f"Kein Treffer für Suchbegriff: '{query}'")
+        return None
 
 def main():
     """Hauptfunktion des Skripts."""
@@ -285,12 +292,13 @@ def update_responses():
     with open('responses.js', 'r', encoding='utf-8') as js_file:
         responses_content = js_file.read()
     # Überprüfe, ob die Datei mit einer geschweiften Klammer endet
-    if responses_content.strip().endswith('};'):
         # Entferne die letzte geschweifte Klammer
-        responses_content = responses_content.rstrip('};').rstrip()
     # Frage den Nutzer, ob er die Inhalte der antworten.json in die responses.js übernehmen will
     user_input = input("Möchten Sie die Inhalte der antworten.json in die responses.js übernehmen? (ja/nein): ").lower()
     if user_input == 'ja':
+        responses_content = responses_content.rstrip()
+        if responses_content.strip().endswith('};'):
+            responses_content = responses_content.rstrip('};').rstrip()
         with open('responses.js', 'w', encoding='utf-8') as js_file:
             # Schreibe den bisherigen Inhalt ohne die schließende Klammer
             js_file.write(responses_content)
