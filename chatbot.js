@@ -30,7 +30,7 @@ function getBotReply(message) {
     return result[0].item.response;
   } else {
     // Wenn keine passende Antwort gefunden wird
-    return "Tut mir leid, dazu wurden mir noch keine Daten hinterlegt. Vielleicht versuchst du mal nur den Begriff einzugeben.";
+    return "Tut mir leid, dazu wurden mir noch keine Daten hinterlegt. Vielleicht versuchst du mal nur den Begriff einzugeben. Außerdem solltest du wissen, das aufgrund des Zeitmanagements meines Entwicklers gerade andere Projekte Vorrang haben. Das Senden der Log Dateien ist dager aktuell pausiert. Auch ist aktuell nicht mit einer Ausweitung der Themenbereiche zu rechnen.";
   }
 }
 // Funktion um den LogFile zu erstellen
